@@ -4,8 +4,13 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Handler;
 import android.widget.RemoteViews;
+import android.widget.ImageView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.databinding.*;
 
 /**
  * Implementation of App Widget functionality.
@@ -14,6 +19,8 @@ public class ClockWidget extends AppWidgetProvider {
 
     static Util util;
     static Settings settings;
+
+
 
     private int mInterval = 250; // 5 seconds by default, can be changed later
     private Handler mHandler;
@@ -100,21 +107,19 @@ public class ClockWidget extends AppWidgetProvider {
         RemoteViews views3 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
         if (data.elapsed != null)views3.setTextViewText(R.id.elapsed_text, daytimeToString(data.elapsed));
 
-        /*RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
-        if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
-
-        RemoteViews views5 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
-        if (data.sync == null) views5.setTextViewText(R.id.synced_text, "N");
-        else if (data.sync) views5.setTextViewText(R.id.synced_text, "S");
-        else if (!data.sync) views5.setTextViewText(R.id.synced_text, "F");
-        //views.setTextViewText(R.id.appwidget_text, widgetText);*/
         RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
         if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
 
+        RemoteViews views5 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
 
-        /*if (data.sync == null) sw.setImageResource(R.drawable.nsyncicon);
-        if (data.sync) sw.setImageResource(R.drawable.ssyncicon);
-        if (!data.sync) sw.setImageResource(R.drawable.fsyncicon);*/
+        if (data.sync) {
+            //views5.setTextColor(R.id.synced_text, Color.GREEN);
+            views5.setTextViewText(R.id.synced_text, ".");
+        }
+        else if (!data.sync) {
+            //views5.setTextColor(R.id.synced_text, Color.YELLOW);
+            views5.setTextViewText(R.id.synced_text, ".");
+        }
 
 
 
@@ -123,6 +128,8 @@ public class ClockWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views2);
         appWidgetManager.updateAppWidget(appWidgetId, views3);
         appWidgetManager.updateAppWidget(appWidgetId, views4);
+        appWidgetManager.updateAppWidget(appWidgetId, views5);
+        //appWidgetManager.updateAppWidget(appWidgetId, image);
 
     }
 
