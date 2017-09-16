@@ -7,10 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.widget.RemoteViews;
+import android.widget.ProgressBar;
 import android.widget.ImageView;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.databinding.*;
+
 
 /**
  * Implementation of App Widget functionality.
@@ -58,7 +57,16 @@ public class ClockWidget extends AppWidgetProvider {
             secString = Integer.toString(dtime.min);
         else if (dtime.min >= 0)
             secString = "0" + Integer.toString(dtime.min);
-        return Integer.toString(dtime.hour % 13) + ":" + secString;
+        return Integer.toString(dtime.hour % 12 == 0 ? 12 : dtime.hour % 12) + ":" + secString;
+    }
+
+    static String daytimeToHMS(Util.Daytime dtime) {
+        String secString = "";
+        if (dtime.min >= 10)
+            secString = Integer.toString(dtime.min);
+        else if (dtime.min >= 0)
+            secString = "0" + Integer.toString(dtime.min);
+        return Integer.toString(dtime.hour % 12 == 0 ? 12 : dtime.hour % 12) + ":" + secString;
     }
 
 
@@ -93,30 +101,33 @@ public class ClockWidget extends AppWidgetProvider {
 
 
         // Construct the RemoteViews object
+
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
         views.setTextViewText(R.id.time_text, daytimeToString(data.t));
+        if (data.tot == null) {
+            views.setTextColor(R.id.time_text, Color.parseColor("#22ffffff"));
+            //views.setTextSize(R.id.time_text, Color.parseColor("#22ffffff"));
+        }
 
         RemoteViews views2 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
         views2.setTextViewText(R.id.ampm_text, data.t.ampm());
 
         RemoteViews views3 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
-        if (data.elapsed != null)views3.setTextViewText(R.id.elapsed_text, daytimeToString(data.elapsed));
+        //if (data.elapsed != null)views3.setTextViewText(R.id.elapsed_text, daytimeToString(data.elapsed));
+        views3.setTextViewText(R.id.elapsed_text, "0:27");
 
         RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
-        if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
+        //if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
+        views4.setTextViewText(R.id.total_text, "1:01");
 
         RemoteViews views5 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
-
-        if (data.sync) {
-            //views5.setTextColor(R.id.synced_text, Color.GREEN);
-            views5.setTextViewText(R.id.synced_text, ".");
+        views5.setTextViewText(R.id.synced_text, ".");
+        if (data.sync) { //sets color of dot
+            views5.setTextColor(R.id.synced_text, Color.GREEN);
         }
         else if (!data.sync) {
-            //views5.setTextColor(R.id.synced_text, Color.YELLOW);
-            views5.setTextViewText(R.id.synced_text, ".");
+            views5.setTextColor(R.id.synced_text, Color.YELLOW);
         }
-
-
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -124,7 +135,6 @@ public class ClockWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views3);
         appWidgetManager.updateAppWidget(appWidgetId, views4);
         appWidgetManager.updateAppWidget(appWidgetId, views5);
-        //appWidgetManager.updateAppWidget(appWidgetId, image);
 
     }
 

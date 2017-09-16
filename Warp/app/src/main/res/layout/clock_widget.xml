@@ -15,6 +15,7 @@
         android:contentDescription="0:00"
         android:text="0:00"
         android:textColor="#ffffff"
+
         android:textSize="90sp"
         android:textStyle="" />
 
@@ -31,6 +32,22 @@
         android:layout_alignBottom="@+id/time_text"
         android:layout_toRightOf="@+id/time_text"
         android:layout_toEndOf="@+id/time_text" />
+
+
+    <TextView
+        android:id="@+id/synced_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription=".2"
+        android:rotation = "180"
+        android:text="."
+        android:textColor="#ffffff"
+        android:textSize="120sp"
+        android:textStyle="bold"
+        android:layout_alignBaseline="@+id/total_text"
+        android:layout_alignBottom="@+id/total_text"
+        android:layout_toRightOf="@+id/total_text"
+        android:layout_toEndOf="@+id/total_text" />
 
     <TextView
         android:id="@+id/elapsed_text"
@@ -63,41 +80,38 @@
         android:layout_marginRight="11dp"
         android:layout_marginEnd="11dp" />
 
-    <TextView
-        android:id="@+id/synced_text"
+    <ProgressBar
+        android:id="@+id/extraTimeBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="."
-        android:text="."
-        android:textColor="#ffffff"
-        android:textSize="200sp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/time_text"
-        android:layout_toRightOf="@+id/total_text"
-        android:layout_toEndOf="@+id/total_text" />
+        android:layout_below="@+id/synced_text"
+        android:layout_toLeftOf="@+id/synced_text"
+        android:layout_toRightOf="@+id/elapsed_text"
+        android:layout_toEndOf="@+id/elapsed_text" />
 
 
-   <!-- <ImageView
-          android:id="@+id/nIcon"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignTop="@+id/synced_text"
-          app:srcCompat="@drawable/nsyncicon" />
-
-     <ImageView
-          android:id="@+id/sIcon"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignTop="@+id/synced_text"
-          app:srcCompat="@drawable/ssyncicon" />
+    <!-- <ImageView
+           android:id="@+id/nIcon"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignTop="@+id/synced_text"
+           app:srcCompat="@drawable/nsyncicon" />
 
       <ImageView
-          android:id="@+id/fIcon"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignTop="@+id/synced_text"
-          app:srcCompat="@drawable/fsyncicon" />
- -->
+           android:id="@+id/sIcon"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignTop="@+id/synced_text"
+           app:srcCompat="@drawable/ssyncicon" />
+
+       <ImageView
+           android:id="@+id/fIcon"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignTop="@+id/synced_text"
+           app:srcCompat="@drawable/fsyncicon" />
+  -->
 
 
     <!--  <ImageSwitcher
