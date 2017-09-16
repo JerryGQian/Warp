@@ -17,6 +17,8 @@
 
 */
 
+import java.util.Calendar;
+
 public class WarpService extends IntentService {
 	public final class Constants {
 		// Defines a custom Intent action
@@ -47,8 +49,9 @@ public class WarpService extends IntentService {
 		LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
     }
 	
-	private Object getTime() {
+	private Date getTime() {
 		//get actual time from android
+		return Calendar.getInstance().getTime();
 	}
 	
 	private String convertStretch() {
