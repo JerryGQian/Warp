@@ -45,7 +45,7 @@ public class Settings {
         }
     }
 
-    public String mode = "";
+    public String mode = "Extend";
     public Handles hExtend;
     public Handles hStretch;
     public Handles hSmooth;

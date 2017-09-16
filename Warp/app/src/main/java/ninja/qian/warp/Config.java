@@ -17,11 +17,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Config extends AppCompatActivity implements View.OnClickListener  {
 
     Settings settings;
+    private SeekBar seekh1;
+    private SeekBar seekh2;
+    private SeekBar seekh1N;
+    private SeekBar seekh2N;
+    private TextView texth1;
+    private TextView texth2;
+    private TextView texth1N;
+    private TextView texth2N;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -37,11 +48,18 @@ public class Config extends AppCompatActivity implements View.OnClickListener  {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    class SeekBarListener implements OnSeekBarChangeListener {
+        TextView txt;
+        int progress = 0;
+        public SeekBarListener(TextView tv) {txt = tv;}
+        @Override public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) { progress = progressValue;}
+        @Override public void onStopTrackingTouch(SeekBar seekBar) { texth1.setText("" + (progress / 4.0f));}
+        @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_config);
+        setContentView(R.layout.adjust_tab);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,6 +82,40 @@ public class Config extends AppCompatActivity implements View.OnClickListener  {
                         .setAction("Action", null).show();
             }
         });
+
+        seekh1 = (SeekBar) findViewById(R.id.seekh1);
+        seekh2 = (SeekBar) findViewById(R.id.seekh2);
+        seekh1N = (SeekBar) findViewById(R.id.seekh1N);
+        seekh2N = (SeekBar) findViewById(R.id.seekh2N);
+        texth1 = (TextView) findViewById(R.id.labelh1);
+        texth2 = (TextView) findViewById(R.id.labelh2);
+        texth1N = (TextView) findViewById(R.id.labelh1N);
+        texth2N = (TextView) findViewById(R.id.labelh2N);
+
+        SeekBarListener sbl = new SeekBarListener(texth1);
+        seekh1.setOnSeekBarChangeListener(sbl);
+
+        /*seekh2.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            int progress = 0;
+            @Override public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) { progress = progressValue;}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) { texth2.setText("" + (progress / 4.0f));}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+        });
+
+        seekh1N.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            int progress = 0;
+            @Override public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) { progress = progressValue;}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) { texth1N.setText("" + (progress / 4.0f));}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+        });
+
+        seekh2N.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            int progress = 0;
+            @Override public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) { progress = progressValue;}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) { texth2N.setText("" + (progress / 4.0f));}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+        });*/
+
 
 
         settings = new Settings(getSharedPreferences("WarpSettings", 0));
