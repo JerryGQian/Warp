@@ -72,7 +72,7 @@ public class Settings {
     public void onStop(){
        super.onStop();
 
-      save();
+       save();
     }
 	
 	public void save() {
