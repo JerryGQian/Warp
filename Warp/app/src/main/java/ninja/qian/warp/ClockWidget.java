@@ -58,17 +58,13 @@ public class ClockWidget extends AppWidgetProvider {
             secString = Integer.toString(dtime.min);
         else if (dtime.min >= 0)
             secString = "0" + Integer.toString(dtime.min);
-        return Integer.toString(dtime.hour % 12) + ":" + secString;
+        return Integer.toString(dtime.hour % 13) + ":" + secString;
     }
 
 
     static void updateAppWidget(Context contex, AppWidgetManager appWidgetManage,
                                 int appWidgetI, SharedPreferences se) {
 
-        /*if (settings == null) {
-            set = se;
-            settings = new Settings(set);
-            util = new Util(settings);*/
         context = contex;
         appWidgetManager = appWidgetManage;
         appWidgetId = appWidgetI;
@@ -80,7 +76,6 @@ public class ClockWidget extends AppWidgetProvider {
 
         if (set == null || settings == null) return;
 
-        //CharSequence widgetText = WarpClockConfigureActivity.loadTitlePref(context, appWidgetId);
         Util.PrintData data = util.convert();
         System.out.println("SKADKLSADJSAJD " + data.t.hour);
 
