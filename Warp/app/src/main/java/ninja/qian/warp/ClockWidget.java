@@ -60,15 +60,6 @@ public class ClockWidget extends AppWidgetProvider {
         return Integer.toString(dtime.hour % 12 == 0 ? 12 : dtime.hour % 12) + ":" + secString;
     }
 
-    static String daytimeToHMS(Util.Daytime dtime) {
-        String secString = "";
-        if (dtime.min >= 10)
-            secString = Integer.toString(dtime.min);
-        else if (dtime.min >= 0)
-            secString = "0" + Integer.toString(dtime.min);
-        return Integer.toString(dtime.hour % 12 == 0 ? 12 : dtime.hour % 12) + ":" + secString;
-    }
-
 
     static void updateAppWidget(Context contex, AppWidgetManager appWidgetManage,
                                 int appWidgetI, SharedPreferences se) {
@@ -86,19 +77,6 @@ public class ClockWidget extends AppWidgetProvider {
 
         Util.PrintData data = util.convert();
         System.out.println("SKADKLSADJSAJD " + data.t.hour);
-
-        /*ImageSwitcher sw;
-        sw = (ImageSwitcher) findViewById(R.id.imgsw);
-        sw.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                return imageView;
-            }
-        });
-        */
-
 
         // Construct the RemoteViews object
 
@@ -129,12 +107,19 @@ public class ClockWidget extends AppWidgetProvider {
             views5.setTextColor(R.id.synced_text, Color.YELLOW);
         }
 
+        // Progress bar
+        //RemoteViews views6 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
+        //ProgressBar bar = (ProgressBar)findViewById(R.id.extraTimeBar);
+        //bar.setProgress(data.elapsed / data.tot * 100);
+
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
         appWidgetManager.updateAppWidget(appWidgetId, views2);
         appWidgetManager.updateAppWidget(appWidgetId, views3);
         appWidgetManager.updateAppWidget(appWidgetId, views4);
         appWidgetManager.updateAppWidget(appWidgetId, views5);
+        //appWidgetManager.updateAppWidget(appWidgetId, views6);
 
     }
 

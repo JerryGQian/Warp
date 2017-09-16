@@ -83,12 +83,17 @@
     <ProgressBar
         android:id="@+id/extraTimeBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/synced_text"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:startColor="#FF0000"
+        android:centerColor="#FFFF00"
+
+
+        android:endColor="#00FF00"
+        android:progress="5"
+        android:layout_below="@+id/time_text"
         android:layout_toLeftOf="@+id/synced_text"
-        android:layout_toRightOf="@+id/elapsed_text"
-        android:layout_toEndOf="@+id/elapsed_text" />
+        android:layout_toStartOf="@+id/synced_text" />
 
 
     <!-- <ImageView
