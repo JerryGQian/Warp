@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class Config extends AppCompatActivity {
+public class Config extends AppCompatActivity implements View.OnClickListener  {
 
     Settings settings;
 
@@ -121,7 +121,7 @@ public class Config extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.extend_tab, container, false);
+            View rootView = inflater.inflate(R.layout.adjust_tab, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -142,6 +142,20 @@ public class Config extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            switch (position) {
+                case 0:
+                    AdjustTab atb = new AdjustTab();
+                    atb.setSettings(settings);
+                    return atb;
+                case 1:
+                    AdjustTab tb = new AdjustTab();
+                    tb.setSettings(settings);
+                    return tb;
+                case 2:
+                    AdjustTab t = new AdjustTab();
+                    t.setSettings(settings);
+                    return t;
+            }
             return PlaceholderFragment.newInstance(position + 1);
         }
 
@@ -155,13 +169,29 @@ public class Config extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Time Settings";
                 case 1:
-                    return "SECTION 2";
+                    return "Alarms";
                 case 2:
-                    return "SECTION 3";
+                    return "Settings";
             }
             return null;
         }
+    }
+
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.extend_button:
+                settings.mode = "Extend";
+                break;
+            case R.id.stretch_button:
+                settings.mode = "Stretch";
+                break;
+            case R.id.smooth_button:
+                settings.mode = "Smooth";
+                break;
+        }
+        settings.save();
     }
 }
