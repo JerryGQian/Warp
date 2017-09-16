@@ -39,6 +39,7 @@
 
         <service android:name="backend.Settings" />
 
+        <activity android:name=".ConfigActivity"></activity>
     </application>
 
 </manifest>
