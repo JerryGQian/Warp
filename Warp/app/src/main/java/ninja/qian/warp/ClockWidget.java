@@ -42,7 +42,7 @@ public class ClockWidget extends AppWidgetProvider {
     }
 
     void updateStatus() {
-
+        updateAppWidget(context, appWidgetManager, appWidgetId, set);
     }
 
     static String daytimeToString(Util.Daytime dtime) {
