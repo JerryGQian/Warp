@@ -51,7 +51,7 @@ public class Util {
         }
 
         public int getModHour() {
-            return hour % 12;
+            return (hour % 12 == 0) ? 12 : hour % 12;
         }
 
         @Override
@@ -66,7 +66,7 @@ public class Util {
     }
 
     public static class PrintData {
-        public Daytime t;
+        public Daytime t = new Daytime(0);
         public Boolean sync;
         public Daytime tot = null;
         public Daytime elapsed = null;
@@ -75,6 +75,7 @@ public class Util {
 
     public Settings settings;
     public Calendar calendar = new GregorianCalendar();
+    long count = 0;
 
     public Util(Settings set) {
         settings = set;
@@ -87,6 +88,8 @@ public class Util {
     }
 
     public PrintData convert() {
+        count++;
+        if (count % 5 == 0) settings.load();
         switch (settings.mode) {
             case "Extend": return convertExtend();
             case "Stretch": return convertExtend();
@@ -95,13 +98,44 @@ public class Util {
         return new PrintData();
     }
 
+    public static class Interval {
+        float s;
+        float e;
+
+        public Interval(float s, float e) {
+            this.s = s;
+            this.e = e;
+        }
+
+        public boolean between(float n) {
+            if (s > e) {
+                e += 24;
+            }
+            if (n < e && n > s) return true;
+            return false;
+        }
+        public static boolean between(float n, float s, float e) {
+            Interval i = new Interval(s, e);
+            return i.between(n);
+
+        }
+
+    }
+
     public PrintData convertExtend() {
         Daytime curr = new Daytime();
-        System.out.println("" + curr.hour + ":" + curr.min);
+        System.out.println("" + curr.hour + ":" + curr.min + " " + settings.hExtend.h1 + " " + settings.hExtend.h1N + " "  + settings.hExtend.h2 + " " + settings.hExtend.h2N);
         PrintData pd = new PrintData();
         pd.sync = false;
+        //In normal time
+        if (Interval.between(curr.toFloat(), settings.hExtend.h2, settings.hExtend.h1)) {
+            pd.t = curr;
+            System.out.println("Normal");
+            pd.sync = true;
+            return pd;
+        }
         //in shrunk part?
-        if (curr.toFloat() < settings.hExtend.h2N || curr.toFloat() > settings.hExtend.h1N) {
+        else if (Interval.between(curr.toFloat(), settings.hExtend.h1N, settings.hExtend.h2N)) {
             float origDur = timeBetween(settings.hExtend.h1, settings.hExtend.h2);
             float newDur = timeBetween(settings.hExtend.h1N, settings.hExtend.h2N);
             float elapsed = timeBetween(settings.hExtend.h1N, curr.toFloat());
@@ -111,18 +145,15 @@ public class Util {
             System.out.println("Squeeze" + elapsed + " " + curr.toFloat() + " " + elapsedRatio + " " + ratio);
             return pd;
         }
-        //In normal time
-        else if (curr.toFloat() > settings.hExtend.h2 || curr.toFloat() > settings.hExtend.h1) {
-            pd.t = curr;
-            System.out.println("Normal");
-            pd.sync = true;
-            return pd;
-        }
         else {
             //In h1 gap
-            int gapSign = timeBetween(settings.hExtend.h1, settings.hExtend.h1N) < timeBetween(settings.hExtend.h1N, settings.hExtend.h1) ? 1 : -1;
+            /*int gapSign = timeBetween(settings.hExtend.h1, settings.hExtend.h1N) < timeBetween(settings.hExtend.h1N, settings.hExtend.h1) ? 1 : -1;
             float gapSize = Math.min(timeBetween(settings.hExtend.h1, settings.hExtend.h1N), timeBetween(settings.hExtend.h1N, settings.hExtend.h1));
-            if ((gapSign > 0 && curr.toFloat() < settings.hExtend.h1 + gapSize) || (gapSign < 0 && curr.toFloat() < settings.hExtend.h1 - gapSize)) {
+            */
+            int gapSign = 1;
+            float gapSize = timeBetween(settings.hExtend.h1, settings.hExtend.h1N);
+
+            if (Interval.between(curr.toFloat(), settings.hExtend.h1, settings.hExtend.h1N) && settings.hExtend.h1 < settings.hExtend.h1N) {
                 pd.tot = new Daytime(gapSign);
                 if (gapSign < 0) {
                     pd.t = new Daytime(settings.hExtend.h1N);
@@ -137,9 +168,13 @@ public class Util {
             }
 
             //In h2 gap
-            gapSign = timeBetween(settings.hExtend.h2, settings.hExtend.h2N) < timeBetween(settings.hExtend.h2N, settings.hExtend.h2) ? 1 : -1;
+            /*gapSign = timeBetween(settings.hExtend.h2, settings.hExtend.h2N) < timeBetween(settings.hExtend.h2N, settings.hExtend.h2) ? 1 : -1;
             gapSize = Math.min(timeBetween(settings.hExtend.h2, settings.hExtend.h2N), timeBetween(settings.hExtend.h2N, settings.hExtend.h2));
             if ((gapSign > 0 && curr.toFloat() < settings.hExtend.h2 + gapSize) || (gapSign < 0 && curr.toFloat() < settings.hExtend.h2 - gapSize)) {
+            */
+            gapSign = 1;
+            gapSize = timeBetween(settings.hExtend.h2N, settings.hExtend.h2);
+            //if (Interval.between(curr.toFloat(), settings.hExtend.h2N, settings.hExtend.h2) && settings.hExtend.h2N < settings.hExtend.h2) {
                 pd.tot = new Daytime(gapSign);
                 if (gapSign < 0) {
                     pd.t = new Daytime(settings.hExtend.h2N);
@@ -150,9 +185,9 @@ public class Util {
                     pd.elapsed = new Daytime(timeBetween(settings.hExtend.h2, curr.toFloat()));
                 }
                 return pd;
-            }
+            //}
         }
-        return pd;
+        //return pd;
     }
 
     private float timeBetween(float min, float max) {
@@ -161,4 +196,6 @@ public class Util {
         }
         return max - min;
     }
+
+
 }
