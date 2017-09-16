@@ -7,20 +7,25 @@
     tools:context=".LockScreenActivity">
 
     <Button
-        android:onClick="unlockScreen"
-        android:textColor="#ffffff"
-        android:textSize="35sp"
-        android:text="Tap to unlock"
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/slash_text"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:onClick="unlockScreen"
+        android:text="Tap to unlock"
+        android:textColor="#ffffff"
+        android:textSize="35sp"
+        android:visibility="visible" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/warpbg" />
+        android:src="@drawable/warpbg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
     <TextView
@@ -122,5 +127,16 @@
         android:layout_below="@+id/time_text"
         android:layout_centerHorizontal="true"
         />
+
+    <TextView
+        android:id="@+id/ttc_text"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="78dp"
+        android:textColor="#ffffff"
+        android:text="Tap to unlock" />
 
 </RelativeLayout>
