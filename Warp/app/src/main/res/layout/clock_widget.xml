@@ -67,17 +67,17 @@
         android:id="@+id/synced_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=" "
-        android:text=" "
+        android:contentDescription="."
+        android:text="."
         android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle=""
-        android:layout_marginBottom="14dp"
-        android:layout_above="@+id/ampm_text"
-        android:layout_toEndOf="@+id/time_text"
-        android:layout_toRightOf="@+id/time_text" />
+        android:textSize="200sp"
+        android:textStyle="bold"
+        android:layout_alignBottom="@+id/time_text"
+        android:layout_toRightOf="@+id/total_text"
+        android:layout_toEndOf="@+id/total_text" />
 
-    <!--  <ImageView
+
+   <!-- <ImageView
           android:id="@+id/nIcon"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -97,8 +97,8 @@
           android:layout_height="wrap_content"
           android:layout_alignTop="@+id/synced_text"
           app:srcCompat="@drawable/fsyncicon" />
+ -->
 
-          -->
 
     <!--  <ImageSwitcher
           android:id="@+id/imgsw"
