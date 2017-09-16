@@ -57,11 +57,26 @@ public class WarpClock extends AppWidgetProvider {
 
         RemoteViews views2 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
         views2.setTextViewText(R.id.ampm_text, data.t.ampm());
+
+        RemoteViews views3 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
+        if (data.elapsed != null)views3.setTextViewText(R.id.elapsed_text, daytimeToString(data.elapsed));
+
+        RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
+        if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
+
+        RemoteViews views5 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
+        if (data.sync == null) views5.setTextViewText(R.id.synced_text, "N");
+        else if (data.sync) views5.setTextViewText(R.id.synced_text, "S");
+        else if (!data.sync) views5.setTextViewText(R.id.synced_text, "F");
         //views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
         appWidgetManager.updateAppWidget(appWidgetId, views2);
+        appWidgetManager.updateAppWidget(appWidgetId, views3);
+        appWidgetManager.updateAppWidget(appWidgetId, views4);
+        appWidgetManager.updateAppWidget(appWidgetId, views5);
+
     }
 
     @Override
