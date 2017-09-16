@@ -13,10 +13,10 @@ import java.lang.Math;
 
 public class Util {
     public static class Daytime {
-        public int hour;
-        public int min;
-        public int sec;
-        public int mil;
+        public int hour = 0;
+        public int min = 0;
+        public int sec = 0;
+        public int mil = 0;
 
         public Daytime() {
             TimeZone est = TimeZone.getTimeZone("EST");
@@ -88,9 +88,9 @@ public class Util {
 
     public PrintData convert() {
         switch (settings.mode) {
-            case "Extend": {
-                return convertExtend();
-            }
+            case "Extend": return convertExtend();
+            case "Stretch": return convertExtend();
+            case "Smooth": return convertExtend();
         }
         return new PrintData();
     }
