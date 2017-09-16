@@ -53,10 +53,10 @@ public class WarpClock extends AppWidgetProvider {
         //String finalTime = "";
         String test = "3:38test";
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
-        views.setTextViewText(R.id.appwidget_text, test);
+        views.setTextViewText(R.id.time_text, daytimeToString(data.t));
 
         RemoteViews views2 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
-        views2.setTextViewText(R.id.appwidget_text, daytimeToString(data.t));
+        views2.setTextViewText(R.id.ampm_text, data.t.ampm());
         //views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Instruct the widget manager to update the widget
