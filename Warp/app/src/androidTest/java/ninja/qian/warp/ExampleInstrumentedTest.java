@@ -1,4 +1,4 @@
-package warp.qian.ninja.warp;
+package ninja.qian.warp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("warp.qian.ninja.warp", appContext.getPackageName());
+        assertEquals("ninja.qian.warp", appContext.getPackageName());
     }
 }

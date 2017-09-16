@@ -1,4 +1,4 @@
-package warp.qian.ninja.warp;
+package ninja.qian.warp;
 
 import org.junit.Test;
 
