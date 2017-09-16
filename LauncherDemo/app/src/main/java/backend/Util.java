@@ -95,6 +95,7 @@ public class Util {
         Daytime curr = new Daytime();
         System.out.println("" + curr.hour + ":" + curr.min);
         PrintData pd = new PrintData();
+        pd.sync = false;
         //in shrunk part?
         if (curr.toFloat() < settings.hExtend.h2N || curr.toFloat() > settings.hExtend.h1N) {
             float origDur = timeBetween(settings.hExtend.h1, settings.hExtend.h2);
@@ -110,6 +111,7 @@ public class Util {
         else if (curr.toFloat() > settings.hExtend.h2 || curr.toFloat() > settings.hExtend.h1) {
             pd.t = curr;
             System.out.println("Normal");
+            pd.sync = true;
             return pd;
         }
         else {
