@@ -5,7 +5,12 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
+import android.app.Activity;
+import android.widget.ViewSwitcher;
 
 
 import com.example.andrei.customlauncherdemo.R;
@@ -39,19 +44,26 @@ public class WarpClock extends AppWidgetProvider {
         settings = new Settings(set);
         util = new Util(settings);
 
+
+
         CharSequence widgetText = WarpClockConfigureActivity.loadTitlePref(context, appWidgetId);
         Util.PrintData data = util.convert();
         System.out.println();
-        //data.t = new Util.Daytime(5.5875f);
-        //System.out.println(data.t.min);
-        /*data.tot = "1:32:40";
-        data.elapsed = "0:56:23";
-        data.sync = false;
+
+        /*ImageSwitcher sw;
+        sw = (ImageSwitcher) findViewById(R.id.imgsw);
+        sw.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView imageView = new ImageView(getApplicationContext());
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                return imageView;
+            }
+        });
         */
 
+
         // Construct the RemoteViews object
-        //String finalTime = "";
-        String test = "3:38test";
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
         views.setTextViewText(R.id.time_text, daytimeToString(data.t));
 
@@ -61,21 +73,29 @@ public class WarpClock extends AppWidgetProvider {
         RemoteViews views3 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
         if (data.elapsed != null)views3.setTextViewText(R.id.elapsed_text, daytimeToString(data.elapsed));
 
-        RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
+        /*RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
         if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
 
         RemoteViews views5 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
         if (data.sync == null) views5.setTextViewText(R.id.synced_text, "N");
         else if (data.sync) views5.setTextViewText(R.id.synced_text, "S");
         else if (!data.sync) views5.setTextViewText(R.id.synced_text, "F");
-        //views.setTextViewText(R.id.appwidget_text, widgetText);
+        //views.setTextViewText(R.id.appwidget_text, widgetText);*/
+        RemoteViews views4 = new RemoteViews(context.getPackageName(), R.layout.warp_clock);
+        if (data.tot != null) views4.setTextViewText(R.id.total_text, daytimeToString(data.tot));
+
+
+        /*if (data.sync == null) sw.setImageResource(R.drawable.nsyncicon);
+        if (data.sync) sw.setImageResource(R.drawable.ssyncicon);
+        if (!data.sync) sw.setImageResource(R.drawable.fsyncicon);*/
+
+
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
         appWidgetManager.updateAppWidget(appWidgetId, views2);
         appWidgetManager.updateAppWidget(appWidgetId, views3);
         appWidgetManager.updateAppWidget(appWidgetId, views4);
-        appWidgetManager.updateAppWidget(appWidgetId, views5);
 
     }
 
