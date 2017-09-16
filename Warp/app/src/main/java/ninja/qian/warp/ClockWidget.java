@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.widget.RemoteViews;
 
 /**
@@ -13,6 +14,36 @@ public class ClockWidget extends AppWidgetProvider {
 
     static Util util;
     static Settings settings;
+
+    private int mInterval = 250; // 5 seconds by default, can be changed later
+    private Handler mHandler;
+    private static Context context;
+    private static AppWidgetManager appWidgetManager;
+    private static int appWidgetId;
+    private static SharedPreferences set;
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                updateStatus(); //this function can change value of mInterval.
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
+
+    void updateStatus() {
+
+    }
 
     static String daytimeToString(Util.Daytime dtime) {
         String secString = "";
@@ -24,19 +55,27 @@ public class ClockWidget extends AppWidgetProvider {
     }
 
 
+    static void updateAppWidget(Context contex, AppWidgetManager appWidgetManage,
+                                int appWidgetI, SharedPreferences se) {
 
-
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, SharedPreferences set) {
+        /*if (settings == null) {
+            set = se;
+            settings = new Settings(set);
+            util = new Util(settings);*/
+        context = contex;
+        appWidgetManager = appWidgetManage;
+        appWidgetId = appWidgetI;
+        set = se;
 
         settings = new Settings(set);
         util = new Util(settings);
 
 
+        if (set == null || settings == null) return;
 
         //CharSequence widgetText = WarpClockConfigureActivity.loadTitlePref(context, appWidgetId);
         Util.PrintData data = util.convert();
-        System.out.println();
+        System.out.println("SKADKLSADJSAJD " + data.t.hour);
 
         /*ImageSwitcher sw;
         sw = (ImageSwitcher) findViewById(R.id.imgsw);
@@ -94,6 +133,8 @@ public class ClockWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId, context.getSharedPreferences("WarpSettings",0));
         }
         System.out.println("Updating Clock");
+        mHandler = new Handler();
+        startRepeatingTask();
     }
 
     @Override
@@ -109,10 +150,17 @@ public class ClockWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the first widget is created
         //Intent i = new Intent(context, Settings.class);
         //context.startService(i);
+        mHandler = new Handler();
+        startRepeatingTask();
+        set = context.getSharedPreferences("WarpSettings",0);
+        settings = new Settings(set);
+        util = new Util(settings);
     }
+
 
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+        stopRepeatingTask();
     }
 }
