@@ -42,6 +42,11 @@ public class WarpClockConfigureActivity extends Activity {
 
     public WarpClockConfigureActivity() {
         super();
+
+
+
+
+
     }
 
     // Write the prefix to the SharedPreferences object for this widget
