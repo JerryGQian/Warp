@@ -3,11 +3,11 @@ package warp.qian.ninja.warp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class settings extends AppCompatActivity {
+public class AppListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_app_list);
     }
 }
