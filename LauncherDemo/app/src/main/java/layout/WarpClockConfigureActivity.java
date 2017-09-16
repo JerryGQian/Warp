@@ -30,7 +30,7 @@ public class WarpClockConfigureActivity extends Activity {
 
             // It is the responsibility of the configuration activity to update the app widget
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            WarpClock.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+            //WarpClock.updateAppWidget(context, appWidgetManager, mAppWidgetId, getPreferences(0));
 
             // Make sure we pass back the original appWidgetId
             Intent resultValue = new Intent();

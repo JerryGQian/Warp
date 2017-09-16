@@ -3,17 +3,20 @@ package backend;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.lang.Math;
 
 public class Util {
     public static class Daytime {
-        int hour;
-        int min;
-        int sec;
-        int mil;
+        public int hour;
+        public int min;
+        public int sec;
+        public int mil;
 
         public Daytime() {
-            Calendar calendar = new GregorianCalendar();
+            TimeZone est = TimeZone.getTimeZone("EST");
+            Calendar calendar = Calendar.getInstance(est);
             hour = calendar.getTime().getHours();
             min = calendar.getTime().getMinutes();
             sec = calendar.getTime().getSeconds();
@@ -35,7 +38,7 @@ public class Util {
         }
 
         public float toFloat() {
-            return hour + (min / 60) + (sec / 60 / 60);
+            return (float) hour + (min / 60.0f) + (sec / 60.0f / 60.0f);
         }
 
         public String ampm() {
@@ -59,15 +62,15 @@ public class Util {
     }
 
     public static class PrintData {
-        Daytime t;
-        Boolean sync;
-        Daytime tot = null;
-        Daytime elapsed = null;
+        public Daytime t;
+        public Boolean sync;
+        public Daytime tot = null;
+        public Daytime elapsed = null;
     }
 
 
-    Settings settings;
-    Calendar calendar = new GregorianCalendar();
+    public Settings settings;
+    public Calendar calendar = new GregorianCalendar();
 
     public Util(Settings set) {
         settings = set;
@@ -90,6 +93,7 @@ public class Util {
 
     public PrintData convertExtend() {
         Daytime curr = new Daytime();
+        System.out.println("" + curr.hour + ":" + curr.min);
         PrintData pd = new PrintData();
         //in shrunk part?
         if (curr.toFloat() < settings.hExtend.h2N || curr.toFloat() > settings.hExtend.h1N) {
@@ -98,12 +102,14 @@ public class Util {
             float elapsed = timeBetween(settings.hExtend.h1N, curr.toFloat());
             float elapsedRatio = elapsed / newDur;
             float ratio = origDur / newDur;
-            pd.t = new Daytime(elapsedRatio * ratio + settings.hExtend.h1N);
+            pd.t = new Daytime(elapsedRatio * origDur + settings.hExtend.h1);
+            System.out.println("Squeeze" + elapsed + " " + curr.toFloat() + " " + elapsedRatio + " " + ratio);
             return pd;
         }
         //In normal time
         else if (curr.toFloat() > settings.hExtend.h2 || curr.toFloat() > settings.hExtend.h1) {
             pd.t = curr;
+            System.out.println("Normal");
             return pd;
         }
         else {
@@ -120,6 +126,7 @@ public class Util {
                     pd.t = new Daytime(settings.hExtend.h1);
                     pd.elapsed = new Daytime(timeBetween(settings.hExtend.h1, curr.toFloat()));
                 }
+                System.out.println("Gap");
                 return pd;
             }
 

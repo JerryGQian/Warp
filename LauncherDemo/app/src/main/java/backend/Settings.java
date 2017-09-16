@@ -1,17 +1,27 @@
 package backend;
 
+import android.app.Service;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.app.Activity;
+import android.os.Binder;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.preference.PreferenceManager;
 
-public class Settings extends Activity {
+public class Settings extends Service {
+    private final IBinder mBinder = new LocalBinder();
+    public class LocalBinder extends Binder {
+        Settings getService() {
+            return Settings.this;
+        }
+    }
     public static class Handles {
-        String prefix;
-
-        float h1;
-        float h2;
-
-        float h1N;
-        float h2N;
+        public String prefix;
+        public float h1;
+        public float h2;
+        public float h1N;
+        public float h2N;
 
         public Handles(String pref) {
             this.prefix = pref;
@@ -41,27 +51,44 @@ public class Settings extends Activity {
         }
 
         public void load(SharedPreferences settings) {
-            this.h1  = settings.getFloat(prefix + "h1", 8.0f);
-            this.h2  = settings.getFloat(prefix + "h2", 16.0f);
-            this.h1N = settings.getFloat(prefix + "h1N", 8.0f);
-            this.h2N = settings.getFloat(prefix + "h2N", 16.0f);
+            this.h1  = settings.getFloat(prefix + "h1", 21.0f);
+            this.h2  = settings.getFloat(prefix + "h2", 8.0f);
+            this.h1N = settings.getFloat(prefix + "h1N", 23.0f);
+            this.h2N = settings.getFloat(prefix + "h2N", 8.0f);
         }
     }
 
-    String mode = "";
-    Handles hExtend;
-    Handles hStretch;
-    Handles hSmooth;
+    public String mode = "";
+    public Handles hExtend;
+    public Handles hStretch;
+    public Handles hSmooth;
+
+    public SharedPreferences settings;
 
     public static final String PREFS_NAME = "WarpPrefs";
 
-    public Settings() {
+    public Settings(SharedPreferences set) {
+        settings = set;//PreferenceManager.getDefaultSharedPreferences(this);//getSharedPreferences(PREFS_NAME, 0);
         onCreate();
     }
 
-    public void onCreate(){
+    /*@Override
+    protected void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        onCreate();
+    }*/
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //settings = getSharedPreferences(PREFS_NAME, 0);
+        load();
+    }
+
+    public void load(){
         // Restore preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         hExtend = new Handles("Extend");
         hStretch = new Handles("Stretch");
@@ -75,8 +102,15 @@ public class Settings extends Activity {
 
     }
 
-    public void onStop(){
+/*    public void onStop(){
         super.onStop();
+
+        save();
+    }*/
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
         save();
     }
@@ -95,5 +129,10 @@ public class Settings extends Activity {
 
         // Commit the edits!
         editor.commit();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
     }
 }
