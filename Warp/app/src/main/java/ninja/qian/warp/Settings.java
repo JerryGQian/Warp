@@ -39,9 +39,9 @@ public class Settings {
 
         public void load(SharedPreferences settings) {
             this.h1  = settings.getFloat(prefix + "h1", 21.0f);
-            this.h2  = settings.getFloat(prefix + "h2", 8.0f);
-            this.h1N = settings.getFloat(prefix + "h1N", 23.0f);
-            this.h2N = settings.getFloat(prefix + "h2N", 8.0f);
+            this.h2  = settings.getFloat(prefix + "h2", 9.0f);
+            this.h1N = settings.getFloat(prefix + "h1N", 21.0f);
+            this.h2N = settings.getFloat(prefix + "h2N", 9.0f);
         }
     }
 
@@ -52,7 +52,7 @@ public class Settings {
 
     public SharedPreferences settings;
 
-    public static final String PREFS_NAME = "WarpPrefs";
+    public static final String PREFS_NAME = "WarpSettings";
 
     public Settings(SharedPreferences set) {
         settings = set;//PreferenceManager.getDefaultSharedPreferences(this);//getSharedPreferences(PREFS_NAME, 0);
@@ -61,8 +61,6 @@ public class Settings {
 
 
     public void load(){
-        // Restore preferences
-        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         hExtend = new Handles("Extend");
         hStretch = new Handles("Stretch");
