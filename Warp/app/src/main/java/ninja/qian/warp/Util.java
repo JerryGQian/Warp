@@ -91,10 +91,15 @@ public class Util {
     public PrintData convert() {
         count++;
         if (count % 4 == 0) settings.load();
+        //FORCE EXTEND MODE
+        settings.mode = "Extend";
         switch (settings.mode) {
-            case "Extend": return convertExtend();
-            case "Stretch": return convertExtend();
-            case "Smooth": return convertExtend();
+            case "Extend":
+                return convertExtend();
+            case "Stretch":
+                return convertExtend();
+            case "Smooth":
+                return convertExtend();
         }
         return new PrintData();
     }
