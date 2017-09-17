@@ -110,6 +110,8 @@
         android:layout_alignBottom="@+id/extraTimeBar"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:color="#66FF0000"
+        android:alpha="0.0"
         android:onClick="onClick"
         android:text="Button"
         android:visibility="visible" />

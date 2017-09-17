@@ -1,5 +1,7 @@
 package ninja.qian.warp;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
@@ -155,6 +158,14 @@ public class ClockWidget extends AppWidgetProvider {
         System.out.println("Updating Clock");
         mHandler = new Handler();
         startRepeatingTask();
+
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
+        Intent configIntent = new Intent(context, Configure.class);
+
+        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
+
+        remoteViews.setOnClickPendingIntent(R.id.overlayButton, configPendingIntent);
+        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }
 
     @Override
@@ -186,5 +197,15 @@ public class ClockWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
         stopRepeatingTask();
+    }
+
+    public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.overlayButton: {
+                break;
+            }
+        }
+
     }
 }

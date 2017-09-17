@@ -49,15 +49,18 @@ public class Configure extends Activity implements View.OnClickListener {
             if (settings == null) return;
             Settings.Handles hand = null;
             switch (settings.mode) {
-                case "Extend":
+                case "Extend": {
                     hand = settings.hExtend;
                     break;
-                case "Stretch":
+                }
+                case "Stretch": {
                     hand = settings.hStretch;
                     break;
-                case "Smooth":
+                }
+                case "Smooth": {
                     hand = settings.hSmooth;
                     break;
+                }
             }
             float val = (progress / 4.0f);
             switch (type) {
@@ -123,22 +126,6 @@ public class Configure extends Activity implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if (v != null) {
-            final int id = v.getId();
-            switch (id) {
-                case R.id.extend_button:
-                    settings.mode = "Extend";
-                    break;
-                case R.id.stretch_button:
-                    settings.mode = "Stretch";
-                    break;
-                case R.id.smooth_button:
-                    settings.mode = "Smooth";
-                    break;
-            }
-        }
-        settings.save();
-
         Settings.Handles hand = null;
         switch (settings.mode) {
             case "Extend":
@@ -154,6 +141,30 @@ public class Configure extends Activity implements View.OnClickListener {
                 hand = settings.hExtend;
                 break;
         }
+        if (v != null) {
+            final int id = v.getId();
+            switch (id) {
+                case R.id.extend_button:
+                    settings.mode = "Extend";
+                    break;
+                case R.id.stretch_button:
+                    settings.mode = "Stretch";
+                    break;
+                case R.id.smooth_button:
+                    settings.mode = "Smooth";
+                    break;
+                case R.id.syncbutton: {
+                    hand.h1N = hand.h1;
+                    hand.h2N = hand.h2;
+                    break;
+                }
+                case R.id.exitbutton: {
+                    finish();
+                    break;
+                }
+            }
+        }
+        settings.save();
 
         texth1 .setText("" + hand.h1 );
         texth2 .setText("" + hand.h2 );
