@@ -109,6 +109,9 @@ public class Util {
         System.out.println("" + curr.toFloat() + " " + settings.hExtend.h1 + " " + settings.hExtend.h1N + " "  + settings.hExtend.h2 + " " + settings.hExtend.h2N);
         PrintData pd = new PrintData();
         pd.sync = false;
+        if (settings.hExtend.h2N == settings.hExtend.h2 && settings.hExtend.h1N == settings.hExtend.h1) {
+            pd.sync = true;
+        }
         //In normal time
         if ((curr.toFloat() > settings.hExtend.h2 && curr.toFloat() < settings.hExtend.h1)) {
             pd.t = curr;
@@ -125,12 +128,9 @@ public class Util {
             float ratio = origDur / newDur;
             pd.t = new Daytime(elapsedRatio * origDur + settings.hExtend.h1);
             System.out.println("Squeeze" + elapsed + " " + curr.toFloat() + " " + elapsedRatio + " " + ratio);
-            if (settings.hExtend.h2N == settings.hExtend.h2 && settings.hExtend.h1N == settings.hExtend.h1) {
-                pd.sync = true;
-            }
             return pd;
         }
-        else {
+        else if (!pd.sync) {
             //In h1 gap
             int gapSign = timeBetween(settings.hExtend.h1, settings.hExtend.h1N) < timeBetween(settings.hExtend.h1N, settings.hExtend.h1) ? 1 : -1;
             float gapSize = Math.min(timeBetween(settings.hExtend.h1, settings.hExtend.h1N), timeBetween(settings.hExtend.h1N, settings.hExtend.h1));
@@ -163,6 +163,8 @@ public class Util {
                 }
                 return pd;
             }
+        } else {
+            pd.t = curr;
         }
         return pd;
     }
