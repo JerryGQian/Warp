@@ -92,16 +92,47 @@ public class Util {
         count++;
         if (count % 4 == 0) settings.load();
         //FORCE EXTEND MODE
-        settings.mode = "Extend";
+        //settings.mode = "Extend";
         switch (settings.mode) {
             case "Extend":
                 return convertExtend();
             case "Stretch":
-                return convertExtend();
+                return convertStretch();
             case "Smooth":
                 return convertExtend();
         }
         return new PrintData();
+    }
+
+    public PrintData convertStretch() {
+        Daytime curr = new Daytime();
+        System.out.println("" + curr.toFloat() + " " + settings.hExtend.h1 + " " + settings.hExtend.h1N + " " + settings.hExtend.h2 + " " + settings.hExtend.h2N);
+        PrintData pd = new PrintData();
+        pd.sync = false;
+        pd.t = curr;
+        if (settings.hExtend.h2N == settings.hExtend.h2 && settings.hExtend.h1N == settings.hExtend.h1) {
+            pd.sync = true;
+        }
+        if ((curr.toFloat() < settings.hExtend.h2N && curr.toFloat() < settings.hExtend.h1N) || (curr.toFloat() > settings.hExtend.h1N && curr.toFloat() > settings.hExtend.h2N)) {
+            float origDur = timeBetween(settings.hExtend.h1, settings.hExtend.h2);
+            float newDur = timeBetween(settings.hExtend.h1N, settings.hExtend.h2N);
+            float elapsed = timeBetween(settings.hExtend.h1N, curr.toFloat());
+            float elapsedRatio = elapsed / newDur;
+            float ratio = origDur / newDur;
+            pd.t = new Daytime(elapsedRatio * origDur + settings.hExtend.h1);
+            System.out.println("Squeeze" + elapsed + " " + curr.toFloat() + " " + elapsedRatio + " " + ratio);
+            return pd;
+        }
+        else {
+            float origDur = timeBetween(settings.hExtend.h2, settings.hExtend.h1);
+            float newDur = timeBetween(settings.hExtend.h2N, settings.hExtend.h1N);
+            float elapsed = timeBetween(curr.toFloat(), settings.hExtend.h2N);
+            float elapsedRatio = elapsed / newDur;
+            float ratio = origDur / newDur;
+            pd.t = new Daytime(elapsedRatio * origDur + settings.hExtend.h2N);
+            System.out.println("Squeeze" + elapsed + " " + curr.toFloat() + " " + elapsedRatio + " " + ratio);
+            return pd;
+        }
     }
 
     public PrintData convertExtend() {
@@ -331,8 +362,6 @@ public class Util {
         else {
             return 4;
         }
-
-
 
     }
 

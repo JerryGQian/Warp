@@ -11,7 +11,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline"
         app:layout_constraintGuide_begin="311dp"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="311dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <RelativeLayout
         android:layout_width="344dp"
@@ -22,7 +24,19 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="16dp"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="189dp"
+            android:layout_height="63dp"
+            android:text="Warp Settings"
+            android:textSize="25sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/syncbutton"
+            android:layout_alignStart="@+id/syncbutton"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp" />
 
         <TextView
             android:id="@+id/labelh1"
@@ -75,27 +89,28 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="onClick"
-            android:text="Smooth" />
+            android:text="Synced" />
 
         <Button
             android:id="@+id/stretch_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text=" Stretch  "
             android:layout_alignBaseline="@+id/extend_button"
             android:layout_alignBottom="@+id/extend_button"
-            android:layout_centerHorizontal="true"
-            android:onClick="onClick"
-            android:text="Stretch" />
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/extend_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_marginTop="37dp"
+            android:text="Extend"
+            android:onClick="onClick"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="8dp"
-            android:text="Extend" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <SeekBar
             android:id="@+id/seekh1"
@@ -160,19 +175,18 @@
             android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="Match Anchor Pairs"
+            android:layout_marginTop="11dp"
             android:layout_below="@+id/seekh2N"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="47dp" />
+            android:layout_centerHorizontal="true" />
         <Button
             android:id="@+id/exitbutton"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="Exit"
-            android:layout_marginTop="13dp"
-            android:layout_below="@+id/syncbutton"
-            android:layout_alignLeft="@+id/stretch_button"
-            android:layout_alignStart="@+id/stretch_button" />
+            android:layout_marginBottom="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/textView3"
@@ -193,16 +207,6 @@
             android:text="Anchor 2: New Stretched time" />
 
 
-        <!--<ExpandableListView
-            android:id="@+id/expandableListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="426dp"
-            android:text="Mode"/>-->
 
 
     </RelativeLayout>

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -32,6 +33,11 @@ public class Configure extends Activity implements View.OnClickListener {
     private TextView texth2;
     private TextView texth1N;
     private TextView texth2N;
+
+    private Button extendButton;
+    private Button stretchButton;
+    private Button smoothButton;
+
 
     class SeekBarListener implements OnSeekBarChangeListener {
         TextView txt;
@@ -116,6 +122,16 @@ public class Configure extends Activity implements View.OnClickListener {
         texth1N = (TextView) findViewById(R.id.labelh1N);
         texth2N = (TextView) findViewById(R.id.labelh2N);
 
+        extendButton = (Button) findViewById(R.id.extend_button);
+        stretchButton = (Button) findViewById(R.id.stretch_button);
+        smoothButton = (Button) findViewById(R.id.smooth_button);
+
+        switch(settings.mode) {
+            case "Extend": extendButton.setText("(Extend)"); break;
+            case "Stretch": stretchButton.setText("(Stretch)"); break;
+            case "Smooth": smoothButton.setText("(Synced)"); break;
+        }
+
         seekh1.setOnSeekBarChangeListener(new SeekBarListener(texth1, settings, "h1"));
         seekh2.setOnSeekBarChangeListener(new SeekBarListener(texth2, settings, "h2"));
         seekh1N.setOnSeekBarChangeListener(new SeekBarListener(texth1N, settings, "h1N"));
@@ -146,12 +162,21 @@ public class Configure extends Activity implements View.OnClickListener {
             switch (id) {
                 case R.id.extend_button:
                     settings.mode = "Extend";
+                    extendButton.setText("(Extend)");
+                    stretchButton.setText(" Stretch ");
+                    smoothButton.setText("Synced");
                     break;
                 case R.id.stretch_button:
                     settings.mode = "Stretch";
+                    extendButton.setText("Extend");
+                    stretchButton.setText("(Stretch)");
+                    smoothButton.setText("Synced");
                     break;
                 case R.id.smooth_button:
                     settings.mode = "Smooth";
+                    extendButton.setText("Extend");
+                    stretchButton.setText(" Stretch ");
+                    smoothButton.setText("(Synced)");
                     break;
                 case R.id.syncbutton: {
                     hand.h1N = hand.h1;
