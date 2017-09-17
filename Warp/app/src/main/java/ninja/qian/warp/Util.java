@@ -166,8 +166,4 @@ public class Util {
         return max - min;
     }
 
-    public float destroy() {
-
-        
-    }
 }
