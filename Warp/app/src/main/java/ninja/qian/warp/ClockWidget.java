@@ -58,6 +58,7 @@ public class ClockWidget extends AppWidgetProvider {
     }
 
     static String daytimeToString(Util.Daytime dtime) {
+        if (dtime == null) return "0:00";
         String secString = "";
         if (dtime.min >= 10)
             secString = Integer.toString(dtime.min);
@@ -81,7 +82,6 @@ public class ClockWidget extends AppWidgetProvider {
             }
 
             Util.PrintData data = util.convert();
-            System.out.println("SKADKLSA " + data.t.hour);
 
             //Overlay Button
             /*Intent myIntent = new Intent(CurrentActivity.this, NextActivity.class);
