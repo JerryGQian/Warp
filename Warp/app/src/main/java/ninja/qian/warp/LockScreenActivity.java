@@ -121,7 +121,7 @@ public class LockScreenActivity extends Activity {
 
         // Progress bar
         //ProgressBar bar = (ProgressBar)findViewById(R.id.extraTimeBar);
-        if (data.tot != null && data.elapsed != null) extraTimeBar.setProgress((((data.elapsed.hour*3600)+(data.elapsed.min*60)+data.elapsed.sec) / ((data.tot.hour*3600)+(data.tot.min*60)+data.tot.sec)) * 100);
+        if (data.tot != null && data.elapsed != null) extraTimeBar.setProgress((int) (data.elapsed.toFloat() / data.tot.toFloat() * 100));
         else extraTimeBar.setProgress(1);
         //update clock stuff
     }

@@ -149,7 +149,7 @@ public class Util {
             gapSign = timeBetween(settings.hExtend.h2, settings.hExtend.h2N) < timeBetween(settings.hExtend.h2N, settings.hExtend.h2) ? 1 : -1;
             gapSize = Math.min(timeBetween(settings.hExtend.h2, settings.hExtend.h2N), timeBetween(settings.hExtend.h2N, settings.hExtend.h2));
             if ((gapSign > 0 && curr.toFloat() < settings.hExtend.h2 + gapSize) || (gapSign < 0 && curr.toFloat() < settings.hExtend.h2 - gapSize)) {
-                pd.tot = new Daytime(gapSign);
+                pd.tot = new Daytime(gapSize);
                 if (gapSign < 0) {
                     pd.t = new Daytime(settings.hExtend.h2N);
                     pd.elapsed = new Daytime(timeBetween(settings.hExtend.h2N, curr.toFloat()));
