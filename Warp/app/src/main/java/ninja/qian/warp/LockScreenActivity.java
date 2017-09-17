@@ -6,14 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class LockScreenActivity extends Activity {
@@ -149,6 +145,7 @@ public class LockScreenActivity extends Activity {
 
     public void unlockScreen(View view) {
         //Instead of using finish(), this totally destroys the process
+        stopRepeatingTask();
         finish();
         //android.os.Process.killProcess(android.os.Process.myPid());
     }

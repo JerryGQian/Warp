@@ -1,6 +1,5 @@
 package ninja.qian.warp;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -11,8 +10,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.ProgressBar;
-import android.widget.ImageView;
 
 
 /**
@@ -175,6 +172,7 @@ public class ClockWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             //WarpClockConfigureActivity.deleteTitlePref(context, appWidgetId);
         }
+        stopRepeatingTask();
     }
 
     @Override
