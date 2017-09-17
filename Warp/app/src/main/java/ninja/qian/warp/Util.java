@@ -21,8 +21,8 @@ public class Util {
         public Daytime() {
             TimeZone est = TimeZone.getTimeZone("EST");
             Calendar calendar = Calendar.getInstance(est);
-            System.out.println(Calendar.AM_PM);
-            hour = calendar.getTime().getHours() + (Calendar.AM_PM == Calendar.AM ? 0 : 12);
+            System.out.println("" + Calendar.AM_PM + " " + Calendar.AM + " " + calendar.getTime().getHours());
+            hour = calendar.getTime().getHours();// + (Calendar.AM_PM == Calendar.AM ? 0 : 12);
             min = calendar.getTime().getMinutes();
             sec = calendar.getTime().getSeconds();
             mil = 0;
@@ -91,10 +91,15 @@ public class Util {
     public PrintData convert() {
         count++;
         if (count % 4 == 0) settings.load();
+        //FORCE EXTEND MODE
+        settings.mode = "Extend";
         switch (settings.mode) {
-            case "Extend": return convertExtend();
-            case "Stretch": return convertExtend();
-            case "Smooth": return convertExtend();
+            case "Extend":
+                return convertExtend();
+            case "Stretch":
+                return convertExtend();
+            case "Smooth":
+                return convertExtend();
         }
         return new PrintData();
     }

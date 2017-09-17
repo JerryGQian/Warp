@@ -100,7 +100,7 @@ public class Configure extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.adjust_tab);
+        setContentView(R.layout.activity_configure);
         settings = new Settings(getSharedPreferences("WarpSettings", 0));
 
 

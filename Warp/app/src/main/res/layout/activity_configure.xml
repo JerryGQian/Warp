@@ -131,7 +131,7 @@
             android:id="@+id/anchor_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anchor 1: Starting point"
+            android:text="Anchor 1: Original time"
             android:layout_alignBottom="@+id/seekh1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -145,7 +145,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/seekh1N"
             android:layout_marginTop="55dp"
-            android:text="Anchor 2: Ending point" />
+            android:text="Anchor 2: Original time" />
 
         <Button
             android:id="@+id/syncbutton"
@@ -164,7 +164,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/seekh1"
-            android:text="Time Extend" />
+            android:text="Anchor 1: New Stretched time" />
 
         <TextView
             android:id="@+id/textView5"
@@ -173,7 +173,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/seekh2"
-            android:text="Time Extend" />
+            android:text="Anchor 2: New Stretched time" />
 
 
         <!--<ExpandableListView
