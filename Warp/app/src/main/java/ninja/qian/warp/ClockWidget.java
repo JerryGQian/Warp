@@ -44,6 +44,7 @@ public class ClockWidget extends AppWidgetProvider {
 
     void startRepeatingTask() {
         mStatusChecker.run();
+        System.out.println("StartingLoop");
     }
     void stopRepeatingTask() {
         mHandler.removeCallbacks(mStatusChecker);
@@ -65,7 +66,7 @@ public class ClockWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context contex, AppWidgetManager appWidgetManage,
                                 int appWidgetI, SharedPreferences se) {
-
+        System.out.println("test1");
         context = contex;
         appWidgetManager = appWidgetManage;
         appWidgetId = appWidgetI;
@@ -131,11 +132,16 @@ public class ClockWidget extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetId, views6);
             appWidgetManager.updateAppWidget(appWidgetId, views7);
         }
+        else {
+            System.out.println("NOGOOD");
+
+        }
 
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        System.out.println("update");
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             if (context != null)

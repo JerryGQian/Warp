@@ -71,7 +71,7 @@ public class Configure extends Activity implements View.OnClickListener {
         @Override public void onStopTrackingTouch(SeekBar seekBar) {
             txt.setText("" + (progress / 4.0f));
             if (settings == null) return;
-            Settings.Handles hand = null;
+            Settings.Handles hand;
             switch (settings.mode) {
                 case "Extend":
                     hand = settings.hExtend;
@@ -81,6 +81,9 @@ public class Configure extends Activity implements View.OnClickListener {
                     break;
                 case "Smooth":
                     hand = settings.hSmooth;
+                    break;
+                default:
+                    hand = settings.hExtend;
                     break;
             }
             float val = (progress / 4.0f);
@@ -146,6 +149,9 @@ public class Configure extends Activity implements View.OnClickListener {
                 break;
             case "Smooth":
                 hand = settings.hSmooth;
+                break;
+            default:
+                hand = settings.hExtend;
                 break;
         }
 
