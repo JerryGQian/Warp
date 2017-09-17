@@ -3,6 +3,7 @@ package ninja.qian.warp;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
@@ -78,6 +79,11 @@ public class ClockWidget extends AppWidgetProvider {
 
             Util.PrintData data = util.convert();
             System.out.println("SKADKLSA " + data.t.hour);
+
+            //Overlay Button
+            /*Intent myIntent = new Intent(CurrentActivity.this, NextActivity.class);
+            myIntent.putExtra("key", value); //Optional parameters
+            CurrentActivity.this.startActivity(myIntent);*/
 
             // Construct the RemoteViews object
 
