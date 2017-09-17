@@ -149,6 +149,7 @@ public class LockScreenActivity extends Activity {
 
     public void unlockScreen(View view) {
         //Instead of using finish(), this totally destroys the process
-        android.os.Process.killProcess(android.os.Process.myPid());
+        finish();
+        //android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
