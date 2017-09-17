@@ -125,6 +125,9 @@ public class Util {
             float ratio = origDur / newDur;
             pd.t = new Daytime(elapsedRatio * origDur + settings.hExtend.h1);
             System.out.println("Squeeze" + elapsed + " " + curr.toFloat() + " " + elapsedRatio + " " + ratio);
+            if (settings.hExtend.h2N == settings.hExtend.h2 && settings.hExtend.h1N == settings.hExtend.h1) {
+                pd.sync = true;
+            }
             return pd;
         }
         else {
@@ -162,6 +165,11 @@ public class Util {
             }
         }
         return pd;
+    }
+
+    public PrintData convertSmooth() {
+
+        return null;
     }
 
     private float timeBetween(float min, float max) {
