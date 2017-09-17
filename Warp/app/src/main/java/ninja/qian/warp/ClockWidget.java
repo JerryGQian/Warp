@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
-import android.support.multidex.MultiDex;
 import android.widget.RemoteViews;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
@@ -120,7 +119,7 @@ public class ClockWidget extends AppWidgetProvider {
             RemoteViews views7 = new RemoteViews(context.getPackageName(), R.layout.clock_widget);
             //ProgressBar bar = (ProgressBar)findViewById(R.id.extraTimeBar);
             if (data.tot != null && data.elapsed != null)
-                views7.setProgressBar(R.id.extraTimeBar, (data.tot.hour * 3600) + (data.tot.min * 60) + data.tot.sec, (((data.elapsed.hour * 3600) + (data.elapsed.min * 60) + data.elapsed.sec) / ((data.tot.hour * 3600) + (data.tot.min * 60) + data.tot.sec)) * 100, false);
+                views7.setProgressBar(R.id.extraTimeBar, 100, (int) (data.elapsed.toFloat() / data.tot.toFloat() * 100), false);//s(((data.elapsed.hour * 3600) + (data.elapsed.min * 60) + data.elapsed.sec) / ((data.tot.hour * 3600) + (data.tot.min * 60) + data.tot.sec)) * 100, false);
             else views7.setProgressBar(R.id.extraTimeBar, 100, 1, false);
 
             // Instruct the widget manager to update the widget
@@ -148,7 +147,6 @@ public class ClockWidget extends AppWidgetProvider {
                 updateAppWidget(context, appWidgetManager, appWidgetId, context.getSharedPreferences("WarpSettings",0));
         }
         System.out.println("Updating Clock");
-        MultiDex.install(context);
         mHandler = new Handler();
         startRepeatingTask();
     }

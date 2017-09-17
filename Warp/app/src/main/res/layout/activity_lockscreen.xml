@@ -39,10 +39,11 @@
 
         android:textSize="90sp"
         android:textStyle=""
-        android:layout_marginTop="78dp"
+
+        android:layout_marginTop="82dp"
+
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/elapsed_text"
-        android:layout_alignStart="@+id/elapsed_text" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/ampm_text"
